@@ -38,3 +38,16 @@
 .close-message:hover {
     opacity: 1;
 }
+
+/* Style for clickable task titles */
+.editable-title {
+    color: #0275d8;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s, text-decoration 0.2s;
+}
+
+.editable-title:hover {
+    color: #014c8c;
+    text-decoration: underline;
+}
