@@ -51,3 +51,28 @@
     color: #014c8c;
     text-decoration: underline;
 }
+
+/* Style for the button group */
+.button-group {
+    display: flex;
+    gap: 5px;
+}
+
+.inline-form {
+    display: inline-block;
+}
+
+/* Style for the delete button */
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #bd2130;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}

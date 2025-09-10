@@ -17,3 +17,8 @@ def toggle_task_completion(task: Task) -> Task:
     task.completed = not task.completed
     task.save()
     return task
+
+
+def delete_task(task: Task) -> None:
+    """Delete a Task."""
+    task.delete()

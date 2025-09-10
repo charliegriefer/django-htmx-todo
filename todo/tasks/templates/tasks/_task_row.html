@@ -12,13 +12,25 @@
         {{ task.completed|yesno:"Yes,No" }}
     </td>
     <td>
-        <form 
-            method="POST" 
-            hx-post="{% url 'toggle_task' task.id %}" 
-            hx-target="#task-{{ task.id }}" 
-            hx-swap="outerHTML">
-            {% csrf_token %}
-            <button type="submit">Toggle</button>
-        </form>
+        <div class="button-group">
+            <form 
+                method="POST" 
+                hx-post="{% url 'toggle_task' task.id %}" 
+                hx-target="#task-{{ task.id }}" 
+                hx-swap="outerHTML"
+                class="inline-form">
+                {% csrf_token %}
+                <button type="submit">Toggle</button>
+            </form>
+            <form 
+                method="POST" 
+                hx-post="{% url 'delete_task' task.id %}" 
+                hx-target="#task-{{ task.id }}" 
+                hx-swap="outerHTML"
+                class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
     </td>
 </tr>

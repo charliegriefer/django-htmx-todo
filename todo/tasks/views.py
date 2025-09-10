@@ -8,6 +8,7 @@ from .forms import TaskForm
 from .models import Task
 from .services import (
     create_task_from_form,
+    delete_task,
     toggle_task_completion,
     update_task_from_form,
 )
@@ -127,3 +128,14 @@ def get_task_row(request, pk):
     task = get_object_or_404(Task, pk=pk)
     html = render_to_string("tasks/_task_row.html", {"task": task}, request=request)
     return HttpResponse(html)
+
+
+@require_POST
+def delete_task_view(request, pk):
+    """Delete a task and return a success message."""
+    task = get_object_or_404(Task, pk=pk)
+    delete_task(task)
+    messages.success(request, "Task deleted successfully.")
+    response = HttpResponse("")  # Empty response as the row will be removed
+    response["HX-Trigger"] = "messagesChanged"
+    return response
