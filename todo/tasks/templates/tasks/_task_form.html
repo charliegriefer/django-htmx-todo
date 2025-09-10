@@ -1,0 +1,10 @@
+<form 
+    method="POST" 
+    hx-post="{{ form_action }}" 
+    hx-target="#task-table-body" 
+    hx-swap="beforeend" 
+    hx-on::after-request="this.reset()">
+    {% csrf_token %}
+    {{ form.title }}
+    <button type="submit">{{ button_label }}</button>
+</form>

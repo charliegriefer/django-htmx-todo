@@ -1,0 +1,23 @@
+<tr id="task-{{ task.id }}">
+    <td>
+        <span 
+            hx-get="{% url 'edit_task' task.id %}" 
+            hx-target="#task-{{ task.id }}" 
+            hx-swap="outerHTML">
+            {{ task.title }}
+        </span>
+    </td>
+    <td>
+        {{ task.completed|yesno:"Yes,No" }}
+    </td>
+    <td>
+        <form 
+            method="POST" 
+            hx-post="{% url 'toggle_task' task.id %}" 
+            hx-target="#task-{{ task.id }}" 
+            hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit">Toggle</button>
+        </form>
+    </td>
+</tr>

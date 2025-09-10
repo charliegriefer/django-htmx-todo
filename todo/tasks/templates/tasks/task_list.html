@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <style>
+        .messages {
+            list-style: none;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .messages li {
+            position: relative;
+            margin-bottom: 5px;
+            padding-right: 30px; /* Space for the close button */
+        }
+        .messages .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .messages .error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .close-message {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.5;
+            padding: 0 5px;
+        }
+        .close-message:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tasks</h1>
+
+    <div id="messages-container" 
+         hx-get="{% url 'messages' %}" 
+         hx-trigger="messagesChanged from:body" 
+         hx-swap="innerHTML">
+        {% include "tasks/_messages.html" %}
+    </div>
+
+    <button 
+        id="add-task-btn"
+        hx-get="{% url 'task_form' %}" 
+        hx-target="#task-form-container" 
+        hx-swap="outerHTML">
+        Add Task
+    </button>
+
+    <div id="task-form-container">
+        <!-- Empty until "Add Task" is clicked -->
+    </div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Completed</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="task-table-body">
+            {% for task in tasks %}
+                {% include "tasks/_task_row.html" with task=task %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %} id="message-{{ forloop.counter }}">
+        <span class="message-content">{{ message }}</span>
+        <button class="close-message" 
+                hx-get="{% url 'dismiss_message' %}" 
+                hx-target="#message-{{ forloop.counter }}" 
+                hx-swap="outerHTML"
+                hx-trigger="click">&times;</button>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
