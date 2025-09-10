@@ -49,7 +49,7 @@ def add_task(request):
         html = render_to_string("tasks/_task_row.html", {"task": task}, request=request)
         response = HttpResponse(html)
         # Add a header to trigger an HTMX request to update the messages
-        response['HX-Trigger'] = 'messagesChanged'
+        response["HX-Trigger"] = "messagesChanged"
         return response
     else:
         html = render_to_string(
@@ -79,16 +79,19 @@ def edit_task(request, pk):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             task = update_task_from_form(form)
+            messages.success(request, "Task updated successfully.")
             html = render_to_string(
                 "tasks/_task_row.html", {"task": task}, request=request
             )
-            return HttpResponse(html)
+            response = HttpResponse(html)
+            response["HX-Trigger"] = "messagesChanged"
+            return response
         else:
             html = render_to_string(
-                "tasks/_task_form.html",
+                "tasks/_task_edit_row.html",
                 {
+                    "task": task,
                     "form": form,
-                    "form_action": f"/tasks/{task.pk}/edit/",
                     "button_label": "Save",
                 },
                 request=request,
@@ -98,10 +101,10 @@ def edit_task(request, pk):
     else:  # GET request to show the edit form
         form = TaskForm(instance=task)
         html = render_to_string(
-            "tasks/_task_form.html",
+            "tasks/_task_edit_row.html",
             {
+                "task": task,
                 "form": form,
-                "form_action": f"/tasks/{task.pk}/edit/",
                 "button_label": "Save",
             },
             request=request,
@@ -111,9 +114,16 @@ def edit_task(request, pk):
 
 def messages_view(request):
     """Return rendered messages."""
-    return render(request, 'tasks/_messages.html')
+    return render(request, "tasks/_messages.html")
 
 
 def dismiss_message(request):
     """Handle HTMX request to dismiss a message."""
     return HttpResponse("")  # Return empty response to remove the message
+
+
+def get_task_row(request, pk):
+    """Return a single task row for HTMX requests."""
+    task = get_object_or_404(Task, pk=pk)
+    html = render_to_string("tasks/_task_row.html", {"task": task}, request=request)
+    return HttpResponse(html)
