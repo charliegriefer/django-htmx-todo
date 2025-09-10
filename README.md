@@ -82,11 +82,20 @@ tasks/
 │   └── tasks/
 │       ├── models.py
 │       ├── views.py
+│       ├── services.py
+│       ├── forms.py
 │       ├── urls.py
 │       ├── templates/
 │       │   └── tasks/
-│       │       ├── index.html
-│       │       └── _task_form.html
+│       │       ├── task_list.html
+│       │       ├── _task_form.html
+│       │       ├── _task_row.html
+│       │       ├── _task_edit_row.html
+│       │       └── _messages.html
+│       ├── static/
+│       │   └── tasks/
+│       │       └── css/
+│       │           └── style.css
 │       └── tests.py
 └── requirements.txt
 ```
