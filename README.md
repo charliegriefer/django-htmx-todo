@@ -25,7 +25,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Visit [http://localhost:8000](http://localhost:8000) in your browser.
+Visit [http://localhost:8000/tasks/](http://localhost:8000/tasks/) in your browser.
 
 ---
 
